@@ -8,12 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
-class IndexController extends Controller{
+class PokeSearchController extends Controller{
 
     /**
-     * @Route("index", name="index")
+     * @Route("index/PokeSearch", name="PokeSearch")
      */
-    public function goIndexAction(){
+    public function pokeSearchAction(){
         return $this->render("proyectfiles/index.html.twig");
     }
 
