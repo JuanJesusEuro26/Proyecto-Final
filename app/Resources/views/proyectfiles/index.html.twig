@@ -1,0 +1,53 @@
+{# Este será el index, la página principal de nuestro proyecto y que cargará los controladores necesarios según la acción del usuario. Se accederá mediante un controlador y tendrá aplicado el css y distintas configuraciones para que futuras páginas puedan heredar de él. #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    {# Para el css usaremos bootstrap principalmente, aunque tambien podemos usar css normal en otras paginas. #}
+{% endblock %}
+    <title>Index Proyecto Final</title> {# Obviamente dejamos el titulo fuera del bloque porque cada página tendrá el suyo propio#}
+</head>
+
+<body>
+    <div class="p-3 mb-2 bg-primary bg-opacity-50 text-primary-emphasis">
+        <header >
+            <h1 class="text-center"><strong>Index Proyecto Final</strong></h1>
+            <p class="text-center">Esta página contendrá enlaces a distintos controladores.</p>
+            <hr class="border border-primary border-3 opacity-75">
+        </header>
+
+        <main >
+            <div class="d-flex justify-content-center mt-5">
+                <div class="card" style="min-width: 18rem; max-width: 50rem;">
+                    <div class="card-header"><strong>Opcion 1</strong></div>
+                    <div class="card-body">
+                        <h2 class="card-title">Formulario PHP que envía un correo.</h2>
+                        <p class="card-text">Formulario PHP que envía un correo a través de una dirección de mail especificada en parameters.yml</p>
+                        <a href="{{ path("sendEmail") }}" class="btn btn-primary">Enviar un correo</a>
+                    </div>
+                </div>
+            </div>
+
+            {#<div class="d-flex justify-content-center mt-5">
+                <div class="card" style="min-width: 18rem;">
+                    <div class="card-header"><strong>Opcion 1</strong></div>
+                    <div class="card-body">
+                        <h2 class="card-title">Formulario PHP que envie un correo.</h2>
+                        <p class="card-text">parrafo importante</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>#}
+        </main>
+
+        <footer>
+
+        </footer>
+    </div>
+</body>
+</html>
