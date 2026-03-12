@@ -80,7 +80,7 @@
                     // Corregido: añadido $ y corregido el selector
                     var nombrepk = $("#pokemon_input").val().trim();
 
-                    if (nombrepk === "") { //Si el nombre del pokemon esta vacio, mandamos un error. En teoria no debe saltar nunca porque el input está required
+                    if (nombrepk == "") { //Si el nombre del pokemon esta vacio, mandamos un error. En teoria no debe saltar nunca porque el input está required
                         $("#error-message").text("Escribe un nombre primero").fadeIn();
                         return;
                     }
