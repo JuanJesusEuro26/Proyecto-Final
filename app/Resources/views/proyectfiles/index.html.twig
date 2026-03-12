@@ -16,8 +16,7 @@
     <title>Index Proyecto Final</title> {# Obviamente dejamos el titulo fuera del bloque porque cada página tendrá el suyo propio#}
 </head>
 
-<body class="p-3 mb-2 bg-primary bg-opacity-50 text-primary-emphasis">
-    <div>
+<body class="d-flex flex-column min-vh-100 p-3 mb-2 bg-primary bg-opacity-50 text-primary-emphasis">    
         <header >
             <h1 class="text-center"><strong>Index Proyecto Final</strong></h1>
             <p class="text-center">Esta página contendrá enlaces a distintos controladores.</p>
@@ -63,8 +62,25 @@
             </div> Esta es una funcion que haré solo si me sobra tiempo en el futuro#}
         </main>
 
-        <footer>
-
+        <footer class="mt-auto py-4 bg-dark text-white border-top border-primary border-3">           
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <h5 class="mb-1 text-primary" style="margin:5px;"><strong>PokeSearch Pro</strong></h5>
+                        <p class="small mb-0 opacity-75" style="margin:5px;">
+                            Proyecto Final de Symfony 2.8 y AJAX. <br>
+                            Consumiendo datos de <a href="https://pokeapi.co/" target="_blank" class="text-info text-decoration-none">PokeAPI.co</a>
+                        </p>
+                    </div>
+                </div>
+                
+                <hr class="my-3 opacity-25 bg-light">
+                
+                <div class="text-center">
+                    <p class="small mb-0 text-white-50">
+                        &copy; {{ "now"|date("Y") }} - Todos los derechos reservados
+                    </p>
+                </div>
+            </div>
         </footer>
 
         <script>
@@ -120,6 +136,5 @@
                 });
             });
         </script>
-    </div>
 </body>
 </html>
