@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class PokeSearchController extends Controller{
@@ -15,6 +16,24 @@ class PokeSearchController extends Controller{
      */
     public function pokeSearchAction($slug){ //Cambiamos el paso del nombre mediante request para pasarle unicamente lo que nos hace falta
         $nombreInput = strtolower($slug);
+
+        //Uso de validators:
+        $validator = $this->get('validator');
+        //Definimos las reglas para el validator
+        $reglas=array(
+            new Assert\NotBlank(array('message'=>'El nombre del pokemon es obligatorio')),
+            new Assert\Regex(array('pattern'=>'/^[a-zA-Z\-]+$/', 'message' => 'El nombre solo puede contener letras y guiones')),
+            new Assert\Length(array('max'=>25,'maxMessage'=>'Nombre demasiago largo'))            
+        );
+
+        //Validamos el dato
+        $listaErrores= $validator->validate($nombreInput, $reglas);
+        
+        if (count($listaErrores) > 0) {
+            // Si hay errores, devolvemos el primero en un JSON 400 (Bad Request)
+            $error = $listaErrores[0]; 
+            return new JsonResponse(array('error' => $error->getMessage()), 400);
+        }
     
         //La llamada a la api la haremos en un servicio aparte
         $pokesearchservice=$this->container->get('search_pokemon');
