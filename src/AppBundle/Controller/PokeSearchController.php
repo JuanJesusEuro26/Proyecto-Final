@@ -11,26 +11,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class PokeSearchController extends Controller{
 
     /**
-     * @Route("index/PokeSearch", name="PokeSearch")
+     * @Route("index/PokeSearch/{slug}", name="PokeSearch")
      */
-    public function pokeSearchAction(Request $request){
-        $nombreInput = strtolower(trim($request->request->get('pokemon')));
+    public function pokeSearchAction($slug){
+        $nombreInput = strtolower($slug);
     
-        if(empty($nombreInput)){
-            return new JsonResponse(array("error" => "ERROR: introduce el nombre de un pokemon."), 400);
-        }
+        //La llamada a la api la haremos en un servicio aparte
+        $pokesearchservice=$this->container->get('search_pokemon');
 
-        $url = "https://pokeapi.co/api/v2/pokemon/" . $nombreInput;
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // No imprime, guarda en variable
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Sigue redirecciones
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Evita problemas de certificados SSL localmente
-
-        $respuesta = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        $resultado=$pokesearchservice->buscarPokemon($nombreInput); //Ejecutamos la funcion del servicio
+        $httpCode=$resultado['httpCode'];
+        $respuesta=$resultado['respuesta'];
 
         if ($httpCode === 200) { //Si el contenido se ha cargado correctamente (status 200)
             $datos = json_decode($respuesta, true);

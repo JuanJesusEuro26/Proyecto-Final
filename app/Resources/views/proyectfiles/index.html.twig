@@ -32,7 +32,7 @@
                             <div class="card-body">
                                 <h2 class="card-title">Formulario que busca un Pokemon.</h2>
                                 <p class="card-text">Este formulario usa AJAX para buscar el pokemon e imprimirlo sin tener que reiniciar la pagina, renderizando respuestas JSON en vez de otra pagina diferente</p>
-                                <input type="text" placeholder="Introduce un pokemon" id="pokemon_input" name="pokemon_input" class="form-control mb-2">
+                                <input type="text" placeholder="Introduce un pokemon" id="pokemon_input" name="pokemon_input" class="form-control mb-2" required>
                                 <button class="btn btn-primary" type="submit" id="btn_pokesearch">Buscar un pokemon</button>
                             </div>
                         </form>
@@ -71,16 +71,29 @@
             $(document).ready(function(){
                 $("#resultado-pokemon").hide(); //Nos aseguramos de que el resultado no es visible al cargar la paágina
 
-                $("#btn_pokesearch").click(function(e){
+                $("#pokesearch_form").on("submit", function(e){ //Ponemos submit el form en vez de click al boton para que funcione el input required y no se recargue la pagina.
                     e.preventDefault(); //Prevenimos que la pagina se recargue al pulsar el boton 
 
                     $("#resultado-pokemon").hide();
                     $("#error-message").hide(); //Ocultamos el mensaje de error y el resultado por si alguno de estos estuviese activo
+                    
+                    // Corregido: añadido $ y corregido el selector
+                    var nombrepk = $("#pokemon_input").val().trim();
+
+                    if (nombrepk === "") { //Si el nombre del pokemon esta vacio, mandamos un error. En teoria no debe saltar nunca porque el input está required
+                        $("#error-message").text("Escribe un nombre primero").fadeIn();
+                        return;
+                    }
+
+                    // Corregido: Eliminado el ':' sobrante para que Twig no de error 500
+                    var urlTemplate = "{{ path('PokeSearch', {'slug': 'Valor_reemplazable'}) }}";
+
+                    // Corregido: Usamos urlTemplate (la variable de arriba) para hacer el reemplazo
+                    var urlFinal = urlTemplate.replace('Valor_reemplazable', nombrepk);
 
                     $.ajax({
-                        url: "{{ path('PokeSearch' )}}",
-                        type: "POST",
-                        data: { pokemon: $("#pokemon_input").val()},
+                        url: urlFinal,
+                        type: "GET",
                         success: function(response){
                             //Si el post resulta exitoso cambiamos el valor de los datos del div resultado-pokemon por la informacion que devuelve el controlador
                             $("#pk-nombre").text(response.nombre);
