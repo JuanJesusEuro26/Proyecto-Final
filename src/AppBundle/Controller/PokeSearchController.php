@@ -11,15 +11,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class PokeSearchController extends Controller{
 
     /**
-     * @Route("index/PokeSearch", name="PokeSearch")
+     * @Route("index/PokeSearch/{slug}", name="PokeSearch")
      */
-    public function pokeSearchAction(Request $request){
-        $nombreInput = strtolower(trim($request->request->get('pokemon')));
+    public function pokeSearchAction($slug){
+        $nombreInput = strtolower($slug);
     
-        if(empty($nombreInput)){
-            return new JsonResponse(array("error" => "ERROR: introduce el nombre de un pokemon."), 400);
-        }
-
         //La llamada a la api la haremos en un servicio aparte
         $pokesearchservice=$this->container->get('search_pokemon');
 
