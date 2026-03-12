@@ -22,7 +22,7 @@ class PokeSearchController extends Controller{
         //Definimos las reglas para el validator
         $reglas=array(
             new Assert\NotBlank(array('message'=>'El nombre del pokemon es obligatorio')),
-            new Assert\Regex(array('pattern'=>'/^[a-zA-Z\-]+$/', 'message' => 'El nombre solo puede contener letras y guiones')),
+            new Assert\Regex(array('pattern'=>'/^[a-zA-Z\-]+$/', 'message' => 'El nombre solo puede contener letras y guiones. La ñ no está incluida en las letras validas')),
             new Assert\Length(array('max'=>25,'maxMessage'=>'Nombre demasiago largo'))            
         );
 

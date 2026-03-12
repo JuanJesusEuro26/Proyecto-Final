@@ -8,8 +8,12 @@ class PokeSearchService{
     
 
     public function buscarPokemon($nombrepk){
+
+        $url = "https://pokeapi.co/api/v2/pokemon/" . $nombrepk;
+
         // Opciones por defecto
         $curlOptions = array(
+            CURLOPT_URL             => $url,
             CURLOPT_RETURNTRANSFER  => true,
             CURLOPT_ENCODING        => "",
             CURLOPT_MAXREDIRS       => 10,
@@ -19,20 +23,19 @@ class PokeSearchService{
             CURLOPT_HTTP_VERSION    => CURL_HTTP_VERSION_1_1
         );
 
-        $url = "https://pokeapi.co/api/v2/pokemon/" . $nombrepk;
-
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // No imprime, guarda en variable
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Sigue redirecciones
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Evita problemas de certificados SSL localmente
+        curl_setopt_array($ch, $curlOptions); //Implementado array de opciones para nuestro curl
 
         $respuesta = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if(curl_errno($ch)){
-            $httpCode=500;
-        }
+        $curlError = curl_error($ch); // Capturamos errores de red
         curl_close($ch);
+
+        if ($respuesta == false) {
+            $httpCode = 500;
+            $respuesta = "Error de red: " . $curlError;
+        }
+       
 
         return $this->tratarRespuesta($respuesta, $httpCode, $nombrepk);
     }
