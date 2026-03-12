@@ -17,12 +17,7 @@ class IndexController extends Controller{
         return $this->render("proyectfiles/index.html.twig");
     }
 
-    /**
-     * @Route("index/sendEmail", name="sendEmail")
-     */
-    public function sendEmailAction(){
-        return $this->render("proyectfiles/index.html.twig");
-    }
+    
 }
 
 ?>
