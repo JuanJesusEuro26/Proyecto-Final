@@ -12,9 +12,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 class PokeSearchController extends Controller{
 
     /**
+     * Controlador que recibe un slug desde el javascript con el nombre del pokemon que el usuario quiere buscar, pasa este string por unos validadores
+     * para ver si es valido, procesa la llamada al servicio y devuelve el resultado al jquery del index mediante ajax
+     *
+     * @param string $slug
+     * @return JsonResponse
+     */
+
+    /**
      * @Route("index/PokeSearch/{slug}", name="PokeSearch")
      */
-    public function pokeSearchAction($slug){ //Cambiamos el paso del nombre mediante request para pasarle unicamente lo que nos hace falta
+    public function pokeSearchAction(string $slug){ //Cambiamos el paso del nombre mediante request para pasarle unicamente lo que nos hace falta
         $nombreInput = strtolower($slug);
 
         //Uso de validators:
