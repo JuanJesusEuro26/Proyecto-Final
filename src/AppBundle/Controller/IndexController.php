@@ -11,6 +11,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class IndexController extends Controller{
 
     /**
+     * Carga el indice de la pagina
+     *
+     * @return Response
+     */
+    /**
      * @Route("index", name="index")
      */
     public function goIndexAction(){
